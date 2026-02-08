@@ -14,28 +14,28 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  final name = TextEditingController();
   final gmail = TextEditingController();
   final urn = TextEditingController();
   final pass = TextEditingController();
+  final confirmPass = TextEditingController();
 
   String error = '';
 
   Future<void> signup() async {
+    if (pass.text != confirmPass.text) {
+      setState(() => error = "Passwords do not match");
+      return;
+    }
+
     try {
-      String email = widget.role == UserRole.student
+      final email = widget.role == UserRole.student
           ? makeStudentEmail(urn.text.trim())
           : gmail.text.trim();
 
-      final cred = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: pass.text);
-
-      await firestore.collection("users").doc(cred.user!.uid).set({
-        "name": name.text,
-        "gmail": gmail.text,
-        "role": widget.role.name,
-        "urn": widget.role == UserRole.student ? urn.text : null,
-      });
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: pass.text.trim(),
+      );
 
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
@@ -48,21 +48,96 @@ class _SignupPageState extends State<SignupPage> {
     final isStudent = widget.role == UserRole.student;
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Signup")),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            TextField(controller: name, decoration: const InputDecoration(labelText: "Username")),
-            TextField(controller: gmail, decoration: const InputDecoration(labelText: "Gmail")),
-            if (isStudent)
-              TextField(controller: urn, decoration: const InputDecoration(labelText: "URN")),
-            TextField(controller: pass, obscureText: true, decoration: const InputDecoration(labelText: "Password")),
-            const SizedBox(height: 20),
-            if (error.isNotEmpty)
-              Text(error, style: const TextStyle(color: Colors.red)),
-            ElevatedButton(onPressed: signup, child: const Text("Signup"))
-          ],
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF0B2D4F), Color(0xFF1E64B7)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 24),
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF2F1D3),
+                  borderRadius: BorderRadius.circular(18),
+                ),
+                child: Column(
+                  children: [
+                    const Text(
+                      "CREATE ACCOUNT",
+                      style: TextStyle(
+                        fontSize: 24,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 25),
+
+                    _field(gmail, "University Email"),
+                    if (isStudent) const SizedBox(height: 15),
+                    if (isStudent) _field(urn, "URN"),
+                    const SizedBox(height: 15),
+                    _field(pass, "Create Password", obscure: true),
+                    const SizedBox(height: 15),
+                    _field(confirmPass, "Re-enter Password", obscure: true),
+
+                    if (error.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Text(
+                          error,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      ),
+
+                    const SizedBox(height: 25),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: signup,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.lightBlue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: const Text(
+                          "Create Account",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _field(
+    TextEditingController controller,
+    String hint, {
+    bool obscure = false,
+  }) {
+    return TextField(
+      controller: controller,
+      obscureText: obscure,
+      decoration: InputDecoration(
+        hintText: hint,
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
         ),
       ),
     );
