@@ -57,6 +57,7 @@ class _SignupPageState extends State<SignupPage> {
           ),
         ),
         child: SafeArea(
+          
           child: Center(
             child: SingleChildScrollView(
               child: Container(
@@ -67,6 +68,7 @@ class _SignupPageState extends State<SignupPage> {
                   borderRadius: BorderRadius.circular(18),
                 ),
                 child: Column(
+                  
                   children: [
                     const Text(
                       "CREATE ACCOUNT",
@@ -96,6 +98,13 @@ class _SignupPageState extends State<SignupPage> {
                       ),
 
                     const SizedBox(height: 25),
+
+
+                  SafeArea(
+      child: IconButton(
+        icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
+        onPressed: () => Navigator.pop(context),
+      ),),
                     SizedBox(
                       width: double.infinity,
                       height: 50,
@@ -120,6 +129,7 @@ class _SignupPageState extends State<SignupPage> {
           ),
         ),
       ),
+      
     );
   }
 

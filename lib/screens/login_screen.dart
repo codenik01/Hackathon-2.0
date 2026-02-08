@@ -62,6 +62,8 @@ class _LoginPageState extends State<LoginPage> {
             end: Alignment.bottomCenter,
           ),
         ),
+
+        
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -77,7 +79,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 30),
-
+//
+ 
                   // LOGIN CARD
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 24),
@@ -152,6 +155,12 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                   ),
+
+                  SafeArea(
+      child: IconButton(
+        icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
+        onPressed: () => Navigator.pop(context),
+      ),),
 
                   const SizedBox(height: 25),
                   Text(
