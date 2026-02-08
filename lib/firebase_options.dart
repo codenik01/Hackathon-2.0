@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAjGiSsGcnJQpeUfaA3i-jyTkGScCU2LEw',
-    appId: '1:865215516207:android:cac14ba7aa1c005e9880da',
-    messagingSenderId: '865215516207',
-    projectId: 'campusconnect-f3034',
-    storageBucket: 'campusconnect-f3034.firebasestorage.app',
+    apiKey: 'AIzaSyBNS9_F_VIspMczFmoGeSJckQfNbbGp9e4',
+    appId: '1:358993424983:android:9a79401b91d06d0bbba912',
+    messagingSenderId: '358993424983',
+    projectId: 'campus-connect-c304d',
+    storageBucket: 'campus-connect-c304d.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB3udeEwoxOnyrIo9NJ3jTdvqmU-_Qh6y0',
-    appId: '1:865215516207:ios:63a3a7a2a92921d49880da',
-    messagingSenderId: '865215516207',
-    projectId: 'campusconnect-f3034',
-    storageBucket: 'campusconnect-f3034.firebasestorage.app',
+    apiKey: 'AIzaSyC9hUy75RBlcLucnlNsCnvpOy57htYPD3A',
+    appId: '1:358993424983:ios:4a1bfe174e716db5bba912',
+    messagingSenderId: '358993424983',
+    projectId: 'campus-connect-c304d',
+    storageBucket: 'campus-connect-c304d.firebasestorage.app',
     iosBundleId: 'com.example.campusConnect',
   );
 }

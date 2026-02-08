@@ -44,9 +44,7 @@ class FirebaseStatusScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Firebase Initialization Status'),
-      ),
+      appBar: AppBar(title: const Text('F Initialization Status')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -59,7 +57,7 @@ class FirebaseStatusScreen extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               firebaseReady
-                  ? 'Firebase Initialized Successfully'
+                  ? 'Firebase adsfasdf Successfully'
                   : ' Initialization Failed',
               style: const TextStyle(fontSize: 20),
             ),
