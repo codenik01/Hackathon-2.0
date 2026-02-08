@@ -1,0 +1,71 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Background Gradient -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6AE44A"/>
+      <stop offset="100%" stop-color="#1E6FFF"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded Square Background -->
+  <rect x="16" y="16" rx="90" ry="90" width="480" height="480" fill="url(#bgGrad)"/>
+
+  <!-- Blue Chat Bubble -->
+  <path d="M120 120
+           h190
+           a25 25 0 0 1 25 25
+           v85
+           a25 25 0 0 1 -25 25
+           h-80
+           l-40 30
+           v-30
+           h-70
+           a25 25 0 0 1 -25 -25
+           v-85
+           a25 25 0 0 1 25 -25z"
+        fill="#2F80ED"/>
+
+  <!-- Exclamation Mark -->
+  <rect x="200" y="150" width="20" height="70" rx="10" fill="white"/>
+  <circle cx="210" cy="235" r="10" fill="white"/>
+
+  <!-- Green Chat Bubble -->
+  <path d="M260 150
+           h110
+           a25 25 0 0 1 25 25
+           v55
+           a25 25 0 0 1 -25 25
+           h-50
+           l-30 25
+           v-25
+           h-30
+           a25 25 0 0 1 -25 -25
+           v-55
+           a25 25 0 0 1 25 -25z"
+        fill="#5BD646"/>
+
+  <!-- Plus Sign -->
+  <rect x="315" y="175" width="16" height="60" rx="8" fill="white"/>
+  <rect x="293" y="197" width="60" height="16" rx="8" fill="white"/>
+
+  <!-- Shield -->
+  <path d="M256 290
+           l90 30
+           v65
+           c0 55 -90 85 -90 85
+           s-90 -30 -90 -85
+           v-65
+           l90 -30z"
+        fill="white"/>
+
+  <!-- WiFi -->
+  <path d="M215 360
+           q41 -30 82 0"
+        stroke="#2BB0A6" stroke-width="12" fill="none"/>
+  <path d="M235 385
+           q21 -18 42 0"
+        stroke="#2BB0A6" stroke-width="12" fill="none"/>
+  <circle cx="256" cy="410" r="8" fill="#2BB0A6"/>
+
+</svg>
