@@ -1,8 +1,8 @@
 import 'package:campus_connect/main.dart';
+import 'package:campus_connect/screens/home_screen.dart';
 import 'package:campus_connect/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 
 String makeStudentEmail(String urn) => "student$urn@college.com";
 
@@ -50,8 +50,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final label =
-        widget.role == UserRole.student ? "University Email / URN" : "University Email";
+    final label = widget.role == UserRole.student
+        ? "University Email / URN"
+        : "University Email";
 
     return Scaffold(
       body: Container(
@@ -63,7 +64,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
 
-        
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -79,8 +79,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 30),
-//
- 
+                  //
+
                   // LOGIN CARD
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 24),
@@ -147,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                             child: const Text(
-                              "Sign up",
+                              "Sign in",
                               style: TextStyle(fontSize: 18),
                             ),
                           ),
@@ -157,10 +157,15 @@ class _LoginPageState extends State<LoginPage> {
                   ),
 
                   SafeArea(
-      child: IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
-        onPressed: () => Navigator.pop(context),
-      ),),
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                        size: 28,
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ),
 
                   const SizedBox(height: 25),
                   Text(
@@ -170,15 +175,15 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 6),
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
+                      horizontal: 20,
+                      vertical: 10,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.blue,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Text(
-                      widget.role == UserRole.student
-                          ? "Student"
-                          : "Faculty",
+                      widget.role == UserRole.student ? "Student" : "Faculty",
                       style: const TextStyle(color: Colors.white),
                     ),
                   ),

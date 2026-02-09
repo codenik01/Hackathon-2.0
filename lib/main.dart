@@ -148,68 +148,119 @@ class AuthChoicePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          role == UserRole.student ? "Student Portal" : "Faculty Portal",
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF07182C), Color(0xFF024B94)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
         ),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _authCard(
-              context,
-              icon: Icons.login,
-              title: "Login",
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => LoginPage(role: role)),
-                );
-              },
-            ),
-            const SizedBox(height: 20),
-            _authCard(
-              context,
-              icon: Icons.person_add,
-              title: "Signup",
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => SignupPage(role: role)),
-                );
-              },
-            ),
-          ],
+        child: SafeArea(
+          child: Column(
+            children: [
+              // AppBar replacement (to match image)
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(
+                        Icons.arrow_back_ios_new,
+                        color: Colors.blue,
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    const Spacer(),
+                    Text(
+                      role == UserRole.student
+                          ? "Student Portal"
+                          : "Faculty Portal",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const Spacer(flex: 2),
+                  ],
+                ),
+              ),
+
+              const Spacer(),
+
+              // Login Card
+              _authCard(
+                icon: Icons.login,
+                title: "Login",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => LoginPage(role: role)),
+                  );
+                },
+              ),
+
+              const SizedBox(height: 24),
+
+              // Signup Card
+              _authCard(
+                icon: Icons.person_add_alt_1,
+                title: "Signup",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => SignupPage(role: role)),
+                  );
+                },
+              ),
+
+              const Spacer(flex: 2),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _authCard(
-    BuildContext context, {
+  Widget _authCard({
     required IconData icon,
     required String title,
     required VoidCallback onTap,
   }) {
-    return InkWell(
-      onTap: onTap,
-      child: Card(
-        elevation: 5,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        child: Padding(
-          padding: const EdgeInsets.all(24),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          height: 72,
+          decoration: BoxDecoration(
+            color: const Color(0xFFF5F4FA),
+            borderRadius: BorderRadius.circular(18),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.15),
+                blurRadius: 15,
+                offset: const Offset(0, 8),
+              ),
+            ],
+          ),
           child: Row(
             children: [
-              Icon(icon, size: 40, color: Colors.indigo),
+              const SizedBox(width: 20),
+              Icon(icon, size: 30, color: Colors.indigo),
               const SizedBox(width: 20),
               Text(
                 title,
                 style: const TextStyle(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.w600,
+                  color: Colors.black87,
                 ),
               ),
             ],
@@ -224,106 +275,15 @@ class AuthChoicePage extends StatelessWidget {
 /// HOME PAGE
 ////////////////////////////////////////////////////////////
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-
-    return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-      future: firestore.collection("users").doc(user!.uid).get(),
-      builder: (context, snap) {
-        if (!snap.hasData) {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
-        }
-
-        final data = snap.data!.data()!;
-
-        return Scaffold(
-          appBar: AppBar(title: const Text("Profile"), centerTitle: true),
-          body: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                Card(
-                  elevation: 6,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(24),
-                    child: Column(
-                      children: [
-                        const CircleAvatar(
-                          radius: 40,
-                          backgroundColor: Colors.indigo,
-                          child: Icon(
-                            Icons.person,
-                            size: 45,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          data['name'],
-                          style: const TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          data['gmail'],
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                        const Divider(height: 30),
-                        _infoRow("Role", data['role']),
-                        if (data['urn'] != null) _infoRow("URN", data['urn']),
-                      ],
-                    ),
-                  ),
-                ),
-                const Spacer(),
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.redAccent,
-                    minimumSize: const Size(double.infinity, 55),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                  ),
-                  onPressed: () async {
-                    await FirebaseAuth.instance.signOut();
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (_) => const RoleSelectPage()),
-                      (_) => false,
-                    );
-                  },
-                  icon: const Icon(Icons.logout),
-                  label: const Text("Logout", style: TextStyle(fontSize: 18)),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _infoRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
-          Text(value),
-        ],
-      ),
-    );
-  }
+Widget _infoRow(String label, String value) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 6),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
+        Text(value),
+      ],
+    ),
+  );
 }
