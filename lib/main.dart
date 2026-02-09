@@ -141,6 +141,8 @@ class RoleSelectPage extends StatelessWidget {
 /// LOGIN / SIGNUP CHOICE
 ////////////////////////////////////////////////////////////
 
+
+
 class AuthChoicePage extends StatelessWidget {
   final UserRole role;
   const AuthChoicePage({super.key, required this.role});
@@ -148,68 +150,118 @@ class AuthChoicePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          role == UserRole.student ? "Student Portal" : "Faculty Portal",
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF07182C), Color(0xFF024B94)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
         ),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _authCard(
-              context,
-              icon: Icons.login,
-              title: "Login",
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => LoginPage(role: role)),
-                );
-              },
-            ),
-            const SizedBox(height: 20),
-            _authCard(
-              context,
-              icon: Icons.person_add,
-              title: "Signup",
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => SignupPage(role: role)),
-                );
-              },
-            ),
-          ],
+        child: SafeArea(
+          child: Column(
+            children: [
+              // AppBar replacement (to match image)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back_ios_new,
+                          color: Colors.blue),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    const Spacer(),
+                    Text(
+                      role == UserRole.student
+                          ? "Student Portal"
+                          : "Faculty Portal",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const Spacer(flex: 2),
+                  ],
+                ),
+              ),
+
+              const Spacer(),
+
+              // Login Card
+              _authCard(
+                icon: Icons.login,
+                title: "Login",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => LoginPage(role: role),
+                    ),
+                  );
+                },
+              ),
+
+              const SizedBox(height: 24),
+
+              // Signup Card
+              _authCard(
+                icon: Icons.person_add_alt_1,
+                title: "Signup",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => SignupPage(role: role),
+                    ),
+                  );
+                },
+              ),
+
+              const Spacer(flex: 2),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _authCard(
-    BuildContext context, {
+  Widget _authCard({
     required IconData icon,
     required String title,
     required VoidCallback onTap,
   }) {
-    return InkWell(
-      onTap: onTap,
-      child: Card(
-        elevation: 5,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        child: Padding(
-          padding: const EdgeInsets.all(24),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          height: 72,
+          decoration: BoxDecoration(
+            color: const Color(0xFFF5F4FA),
+            borderRadius: BorderRadius.circular(18),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.15),
+                blurRadius: 15,
+                offset: const Offset(0, 8),
+              ),
+            ],
+          ),
           child: Row(
             children: [
-              Icon(icon, size: 40, color: Colors.indigo),
+              const SizedBox(width: 20),
+              Icon(icon, size: 30, color: Colors.indigo),
               const SizedBox(width: 20),
               Text(
                 title,
                 style: const TextStyle(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.w600,
+                  color: Colors.black87,
                 ),
               ),
             ],
@@ -219,6 +271,7 @@ class AuthChoicePage extends StatelessWidget {
     );
   }
 }
+
 
 ////////////////////////////////////////////////////////////
 /// HOME PAGE
